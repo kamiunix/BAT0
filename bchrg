@@ -1,0 +1,37 @@
+#!/bin/bash
+
+#if /sys/class/power_supply/ does not contain a battery directory,
+#acpi -b can be parsed to obtain battery charge and status.
+
+status=`cat /sys/class/power_supply/BAT0/status`
+now=`cat /sys/class/power_supply/BAT0/energy_now`
+full=`cat /sys/class/power_supply/BAT0/energy_full`
+out=`echo $now/$full*100 | bc -q -l`
+inout=$(printf "%.0f" $out)
+counter=1
+red=160
+yellow=11
+green=46
+
+#choose color to display given BAT0 charge
+if [ "$inout" -lt 50 ]; then
+  color=$yellow
+elif [ "$inout" -lt 20 ]; then
+  color=$red
+else
+  color=$green
+fi
+
+#print status and charge bar
+printf "  \e[1m\e[38;5;14m%s\e[m  \e[1m\e[38;5;${color}m[\e[1m" $status
+while [ $counter -le 100 ]
+do
+  if [ "$counter" -le "$inout" ]; then
+    printf "\e[1m\e[38;5;${color}m#\e[m" 
+  else
+    printf " "
+  fi
+  counter=$((counter+=3))
+done
+printf "\e[1m\e[38;5;${color}m]\e[1m  \e[1m\e[38;5;14m%.2f %s\e[m\n" $out '%'
+
