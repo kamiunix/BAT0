@@ -9,9 +9,14 @@ full=`cat /sys/class/power_supply/BAT0/energy_full`
 out=`echo $now/$full*100 | bc -q -l`
 inout=$(printf "%.0f" $out)
 counter=1
+
+#colors
 red=160
 yellow=11
 green=46
+#text before and after power bar
+begin=14
+end=14
 
 #choose color to display given BAT0 charge
 if [ "$inout" -lt 20 ]; then
@@ -23,7 +28,7 @@ else
 fi
 
 #print status and charge bar
-printf "  \e[1m\e[38;5;14m%s\e[m  \e[1m\e[38;5;${color}m[\e[1m" $status
+printf "  \e[1m\e[38;5;${begin}m%s\e[m  \e[1m\e[38;5;${color}m[\e[1m" $status
 while [ $counter -le 100 ]
 do
   if [ "$counter" -le "$inout" ]; then
@@ -33,5 +38,5 @@ do
   fi
   counter=$((counter+=3))
 done
-printf "\e[1m\e[38;5;${color}m]\e[1m  \e[1m\e[38;5;14m%.2f %s\e[m\n" $out '%'
+printf "\e[1m\e[38;5;${color}m]\e[1m  \e[1m\e[38;5;${end}m%.2f %s\e[m\n" $out '%'
 
