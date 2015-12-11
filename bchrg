@@ -14,10 +14,10 @@ yellow=11
 green=46
 
 #choose color to display given BAT0 charge
-if [ "$inout" -lt 50 ]; then
-  color=$yellow
-elif [ "$inout" -lt 20 ]; then
+if [ "$inout" -lt 20 ]; then
   color=$red
+elif [ "$inout" -lt 50 ]; then
+  color=$yellow
 else
   color=$green
 fi
