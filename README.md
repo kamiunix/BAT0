@@ -1,6 +1,7 @@
 # BAT0
 short script to check batty status and print in in cli
 
+
 Notice:
 
   If /sys/class/power_supply/BAT0 does not exist,
