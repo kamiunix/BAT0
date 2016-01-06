@@ -1,8 +1,12 @@
 # BAT0
+
 short script to check batty status and print in in cli
 
+Created by:
 
-Notice:
+  * kamiunix <kamiunix@tuta.io>
+
+##Notice:
 
   If /sys/class/power_supply/BAT0 does not exist,
   you may have a different battery directory.
@@ -10,7 +14,7 @@ Notice:
   If you are unable to find a correct directory within /sys/class,
   use acpi -b to obtain and parse your battery in information.
 
-Install/Usage:
+##Install/Usage:
 
   If you do not have a home bin directory,
 
